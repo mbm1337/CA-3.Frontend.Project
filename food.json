@@ -1,0 +1,85 @@
+{
+  "recipes": [
+    {
+      "title": "Recipe Title 1",
+      "ingredients": "Ingredient 1, Ingredient 2, Ingredient 3",
+      "instructions": "Step 1: Do this, Step 2: Do that",
+      "image": "src/food.png",
+      "id": "54fd"
+    },
+    {
+      "title": "Recipe Title 2",
+      "ingredients": "Ingredient A, Ingredient B, Ingredient C",
+      "instructions": "Step A: Do this, Step B: Do that",
+      "image": "src/food.png",
+      "id": "e782"
+    },
+    {
+      "title": "Recipe Title 3",
+      "ingredients": "Ingredient X, Ingredient Y, Ingredient Z",
+      "instructions": "Step X: Do this, Step Y: Do that",
+      "image": "src/food.png",
+      "id": "3da7"
+    },
+    {
+      "id": "5d2a",
+      "title": "k",
+      "ingredients": "k",
+      "instructions": "m"
+    },
+    {
+      "id": "06c6",
+      "title": "k",
+      "ingredients": "k",
+      "instructions": "m"
+    },
+    {
+      "id": "ff79",
+      "title": "k",
+      "ingredients": "k",
+      "instructions": "m"
+    },
+    {
+      "id": "5ec2",
+      "title": "k",
+      "ingredients": "k",
+      "instructions": "m"
+    },
+    {
+      "id": "d3e7",
+      "title": "k",
+      "ingredients": "k",
+      "instructions": "m"
+    },
+    {
+      "id": "822c",
+      "title": "k",
+      "ingredients": "k",
+      "instructions": "m"
+    },
+    {
+      "id": "e882",
+      "title": "k",
+      "ingredients": "k",
+      "instructions": "m"
+    },
+    {
+      "id": "11ba",
+      "title": "k",
+      "ingredients": "k",
+      "instructions": "m"
+    },
+    {
+      "id": "4085",
+      "title": "k",
+      "ingredients": "k",
+      "instructions": "m"
+    },
+    {
+      "id": "bd33",
+      "title": "sumaia",
+      "ingredients": "ahd",
+      "instructions": "ds"
+    }
+  ]
+}
