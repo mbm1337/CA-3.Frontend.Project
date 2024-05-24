@@ -1,12 +1,14 @@
-import React from 'react'
+import React from 'react';
 
 const Reviews = () => {
-  return (
-    <div>
-        87
-      
-    </div>
-  )
-}
 
-export default Reviews
+
+
+    return (
+    <div>
+dvslvlsdvjl
+    </div>
+  );
+};
+
+export default Reviews;

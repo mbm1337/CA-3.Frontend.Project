@@ -47,7 +47,7 @@ const FoodRecipeList = () => {
             <nav>
                 <ul>
                     <Category onSubmitCategory={handleCategorySubmit} />
-                    <li><NavLink to="/reviews">Reviews</NavLink></li>
+
                     <li><NavLink to="/food-recipe">Recipes</NavLink></li>
                 </ul>
             </nav>
