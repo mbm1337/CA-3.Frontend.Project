@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const AddRecipe = ({ setUpdated, updated }) => {
+const AddRecipe = ({ setUpdated, updated ,isloggedin}) => {//if user is logged in add shoulkd appear
     const initialRecipe = {
         title: '',
         ingredients: '',
@@ -31,7 +31,6 @@ const AddRecipe = ({ setUpdated, updated }) => {
             title: recipe.title,
             ingredients: recipe.ingredients,
             instructions: recipe.instructions,
-            // You might want to handle the image differently if you're not sending it in JSON format
         };
 
         try {
@@ -61,6 +60,14 @@ const AddRecipe = ({ setUpdated, updated }) => {
                     value={recipe.title} 
                     id="title" 
                     placeholder="Enter recipe title" 
+                    onChange={handleChange}
+                    required
+                />
+                 <input 
+                    type="text" 
+                    value={recipe.category} 
+                    id="category" 
+                    placeholder="Enter category" 
                     onChange={handleChange}
                     required
                 />

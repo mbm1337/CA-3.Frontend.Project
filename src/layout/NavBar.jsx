@@ -1,24 +1,38 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
+import "../style/NavigationBar.css";
+import  logo from "../assets/logo.png"
+import { useRef } from 'react';
 function NavigationBar() {
+
+  const contactRef = useRef(null);
+
+  const handleContactClick = () => {
+    contactRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <nav className='nav'>
-      <ul className='nav-list'>
-        <li>
-          <NavLink to="/food-recipe">Food Recipe</NavLink>
-        </li>
-        <li className='auth-links'>
-          <NavLink to="/signup">Signup</NavLink>
-        </li>
-        <li className='auth-links'>
-          <NavLink to="/login">Login</NavLink>
-        </li>
-        <li className='auth-links'>
-          <NavLink to="/addrecipe">add</NavLink>
-        </li>
-      </ul>
-    </nav>
+    <header className="header" id='header'>
+    <div className="header-content">
+      <div className='left-nav'>
+        <div className="logo">
+          <Link to="/"> <img src={logo} alt="Logo" /> </Link>
+        </div>
+        <nav>
+          <ul>
+            <li><Link to="/food-recipe">FOOD RECIPES</Link></li>
+            <li><span onClick={handleContactClick}>CONTACT US</span></li>
+
+          </ul>
+        </nav>
+      </div>
+      <div className="auth-buttons">
+        <Link to="/login">Login</Link>
+        <Link to="/signup"><button>Signup</button></Link>
+      </div>
+     
+    </div>
+  </header>
   );
 }
 
