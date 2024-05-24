@@ -1,0 +1,21 @@
+.category-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.category-label {
+    cursor: pointer;
+    padding: 8px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.category-select {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 10;
+}
