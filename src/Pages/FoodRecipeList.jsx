@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import Category from './Category';
 
 const FoodRecipeList = () => {
     const [recipes, setRecipes] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filterCategory, setFilterCategory] = useState('');
 
     useEffect(() => {
         // Fetch recipes from the server
@@ -19,23 +22,44 @@ const FoodRecipeList = () => {
         fetchRecipes();
     }, []);
 
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const handleCategorySubmit = (category) => {
+        setFilterCategory(category);
+    };
+
+    const filteredRecipes = recipes.filter(recipe =>
+        recipe.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        (filterCategory ? recipe.category.toLowerCase() === filterCategory.toLowerCase() : true)
+    );
+
     return (
         <div>
             <h2>Recipes</h2>
+            <input
+                type="text"
+                placeholder="Search by title..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+            />
             <nav>
                 <ul>
-                    <li><NavLink to="/categories">Categories</NavLink></li>
+                    <Category onSubmitCategory={handleCategorySubmit} />
                     <li><NavLink to="/reviews">Reviews</NavLink></li>
-                    <li><NavLink to="/recipes">Recipes</NavLink></li>
+                    <li><NavLink to="/food-recipe">Recipes</NavLink></li>
                 </ul>
             </nav>
+
             <ul>
-                {recipes.map((recipe) => (
+                {filteredRecipes.map((recipe) => (
                     <li key={recipe.id}>
                         <h3>{recipe.title}</h3>
-                        <img src={recipe.imageURL} alt={recipe.title} style={{ maxWidth: '200px' }} />
+                        <img src={recipe.image} alt={recipe.title} style={{ maxWidth: '200px' }} />
                         <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
                         <p><strong>Instructions:</strong> {recipe.instructions}</p>
+                        <p><strong>Category:</strong> {recipe.category}</p>
                     </li>
                 ))}
             </ul>

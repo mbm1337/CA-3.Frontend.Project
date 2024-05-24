@@ -5,81 +5,115 @@
       "ingredients": "Ingredient 1, Ingredient 2, Ingredient 3",
       "instructions": "Step 1: Do this, Step 2: Do that",
       "image": "src/food.png",
-      "id": "54fd"
+      "id": "54fd",
+      "category": "dessert"
     },
     {
       "title": "Recipe Title 2",
       "ingredients": "Ingredient A, Ingredient B, Ingredient C",
       "instructions": "Step A: Do this, Step B: Do that",
       "image": "src/food.png",
-      "id": "e782"
+      "id": "e782",
+      "category": "seafood"
     },
     {
       "title": "Recipe Title 3",
       "ingredients": "Ingredient X, Ingredient Y, Ingredient Z",
       "instructions": "Step X: Do this, Step Y: Do that",
       "image": "src/food.png",
-      "id": "3da7"
+      "id": "3da7",
+      "category": "meat"
     },
     {
       "id": "5d2a",
       "title": "k",
       "ingredients": "k",
-      "instructions": "m"
+      "instructions": "m",
+      "category": "chicken"
     },
     {
       "id": "06c6",
       "title": "k",
       "ingredients": "k",
-      "instructions": "m"
+      "instructions": "m",
+      "category": "pasta"
     },
     {
       "id": "ff79",
       "title": "k",
       "ingredients": "k",
-      "instructions": "m"
+      "instructions": "m",
+      "category": "cold"
     },
     {
       "id": "5ec2",
       "title": "k",
       "ingredients": "k",
-      "instructions": "m"
+      "instructions": "m",
+      "category": "dessert"
     },
     {
       "id": "d3e7",
       "title": "k",
       "ingredients": "k",
-      "instructions": "m"
+      "instructions": "m",
+      "category": "seafood"
     },
     {
       "id": "822c",
       "title": "k",
       "ingredients": "k",
-      "instructions": "m"
+      "instructions": "m",
+      "category": "meat"
     },
     {
       "id": "e882",
       "title": "k",
       "ingredients": "k",
-      "instructions": "m"
+      "instructions": "m",
+      "category": "chicken"
     },
     {
       "id": "11ba",
       "title": "k",
       "ingredients": "k",
-      "instructions": "m"
+      "instructions": "m",
+      "category": "pasta"
     },
     {
       "id": "4085",
       "title": "k",
       "ingredients": "k",
-      "instructions": "m"
+      "instructions": "m",
+      "category": "cold"
     },
     {
       "id": "bd33",
       "title": "sumaia",
       "ingredients": "ahd",
-      "instructions": "ds"
+      "instructions": "ds",
+      "category": "meat"
+    },
+    {
+      "id": "9e29",
+      "title": "lkj",
+      "ingredients": "lkjl",
+      "instructions": "k,m,m,",
+      "category": "meat"
+    },
+    {
+      "id": "3522",
+      "title": "lkj",
+      "ingredients": "lkjl",
+      "instructions": "k,m,m,",
+      "category": "chicken"
+    },
+    {
+      "id": "0d4d",
+      "title": "lkj",
+      "ingredients": "lkjl",
+      "instructions": "k,m,m,",
+      "category": "pasta"
     }
   ]
 }
