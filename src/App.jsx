@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes,Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes,Link ,Outlet} from 'react-router-dom';
 import Login from './auth/Login';
 import FoodRecipeList from './Pages/FoodRecipeList';
 import Register from './auth/Register';
 import NavigationBar from './layout/NavBar';
-import Logout from './auth/Logout';
-import AddRecipe from './Pages/addRecipe';
+import AddRecipe from './Pages/AddRecipe';
 import Home from './layout/home';
 import Reviews from './Pages/Reviews';
+import "./App.css"
 
 function App() {
-  const [user, setUser] = useState([]); //array da jeg får token og mail
+  const [user, setUser] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
   const handleLogout = () => {
       setUser([]);
@@ -22,20 +22,15 @@ function App() {
       <div>
         <NavigationBar />
         <Routes>
-
-          <Route path = "/" element ={<Home/>}/>
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/addrecipe" element={<AddRecipe />} />
-
           <Route path="/food-recipe" element={<FoodRecipeList />}>
-          <Route path="/reviews" element={<Reviews />} />
-
             
 
 
-  </Route>
-  
+          </Route>
         </Routes>
       </div>
     </Router>
@@ -43,3 +38,11 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
+

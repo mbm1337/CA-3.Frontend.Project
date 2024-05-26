@@ -12,22 +12,27 @@ const Form = styled.form`
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     box-shadow: 5px 5px 15px -1px rgba(0,0,0,0.75);
 `;
 
 const Label = styled.label`
-  margin-bottom: 10px;
-  font-size: 1.2em;
+    color: rgb(77, 75, 75);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: block;
+    font-weight: bold;
+    font-size: x-large;
+    margin-bottom: 0.5em;
 `;
 
 const Input = styled.input`
- width: 100%;
+  width: 100%;
     margin-bottom: 1.25em;
     height: 40px;
     border-radius: 5px;
     border: 1px solid gray;
-    padding: 0.8em;
+    padding: 0.3em;
     font-family: 'Inter', sans-serif;
     outline: none;
 `;
@@ -35,6 +40,18 @@ const Input = styled.input`
 const Error = styled.p`
   color: red;
 `;
+
+const Btn = styled.p`
+    align-self: center
+`;
+
+
+const Div = styled.div`
+    width: 500px;
+    min-height: 570px;
+    margin: 100px auto;
+`;
+
 
 const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
@@ -64,6 +81,8 @@ const Login = ({ setIsAuthenticated }) => {
   };
 
   return (
+    <Div>
+
     <Form onSubmit={handleSubmit}>
       <Label>Username</Label>
       <Input
@@ -83,11 +102,13 @@ const Login = ({ setIsAuthenticated }) => {
 
       {error && <Error>{error}</Error>}
 
-      <Input type="submit" value="Login" />
+      <Input type="submit" value="Login" className='form--submit' />
 
       {/* Link to Register page */}
-      <NavLink to="/signup">Register</NavLink>
+      <Btn><NavLink to="/signup">Register</NavLink></Btn>
     </Form>
+    </Div>
+
   );
 };
 

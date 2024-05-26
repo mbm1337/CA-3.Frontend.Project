@@ -29,7 +29,6 @@ function NavigationBar() {
       <div className="auth-buttons">
         <Link to="/login">Login</Link>
         <Link to="/signup"><button>Signup</button></Link>
-        <Link to="reviews">Best Reviewed</Link>
 
       </div>
      
