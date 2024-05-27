@@ -1,4 +1,4 @@
-import { BASE_URL_DEV } from "../Utils/globalvariables";
+import { BASE_URL_DEV } from "../utils/globalvariables";
 
 
 export const login = async (username, password) => {
