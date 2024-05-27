@@ -30,6 +30,17 @@ function NavigationBar() {
           <Link to="/login">Login</Link>
           <Link to="/signup"><button>Signup</button></Link>
         </div>
+        <nav>
+          <ul>
+            <li><Link to="/food-recipe">FOOD RECIPES</Link></li>
+            <li><span onClick={handleContactClick}>CONTACT US</span></li>
+
+          </ul>
+        </nav>
+      </div>
+      <div className="auth-buttons">
+        <Link to="/login">Login</Link>
+        <Link to="/signup"><button>Signup</button></Link>
       </div>
     </header>
   );

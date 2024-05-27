@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const Category = ({ onSubmitCategory }) => {
     const [category, setCategory] = useState('');
+    const[visible,setVisible]= useState(false);
     const categories = ['dessert', 'seafood', 'meat', 'chicken', 'pasta', 'cold'];
 
     const handleDropdownChange = (e) => {
@@ -11,14 +12,15 @@ const Category = ({ onSubmitCategory }) => {
     };
 
     return (
-        <div>
-            <label htmlFor="dropdown">Category</label>
-            <select id="dropdown" value={category} onChange={handleDropdownChange}>
+        <div className='category-recipe'>
+            <label htmlFor="dropdown" onClick={()=>setVisible(!visible)}>Category</label>
+           { visible && <select id="dropdown" value={category}  onChange={handleDropdownChange}>
                 <option value="">Select a category</option>
                 {categories.map((cat, index) => (
                     <option key={index} value={cat}>{cat}</option>
                 ))}
-            </select>
+            </select>}
+            
         </div>
     );
 };

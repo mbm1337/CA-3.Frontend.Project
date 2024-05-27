@@ -36,3 +36,21 @@ button {
   button:hover {
     border-color: #625f5f;
   }
+  .form--submit {
+    width: 50%;
+    padding: 0.625em;
+    border-radius: 5px;
+    color: #333;
+    background-color: #c5d4db;
+    border: 1px dashed #c5d4db;
+    cursor: pointer;
+  }
+  
+  .form--submit:hover {
+    color: #333;
+    background-color: white;
+    border: 1px dashed #c5d4db;
+    cursor: pointer;
+    transition: 0.5s;
+  }
+  
