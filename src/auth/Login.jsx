@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate, NavLink } from 'react-router-dom'; // Import useNavigate and NavLink
-import { login } from '../service/apiFacade';
 
 
 const Form = styled.form`
@@ -73,6 +72,8 @@ const Login = ({ setIsAuthenticated }) => {
       console.log('Token saved in localStorage:', data.token);
       setIsAuthenticated(true);
       localStorage.setItem('token', data.token);
+      localStorage.setItem('username', userInfo.username); 
+
       navigate('/home');
     } catch (error) {
       setError('Failed to login');

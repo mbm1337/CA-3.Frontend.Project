@@ -1,10 +1,18 @@
-import React, { useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function Logout({ handleLogout }) {
-    useEffect(() => {
-        handleLogout();
-    }, [handleLogout]);
+const Logout = () => {
+  const navigate = useNavigate();
 
-    return <Navigate to="/" />;
-}
+  useEffect(() => {
+    sessionStorage.clear();
+    navigate('/');
+  }, []);
+
+  return (
+    <>
+    </>
+  );
+};
+
+export default Logout;

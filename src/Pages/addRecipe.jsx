@@ -1,54 +1,66 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AddRecipe = ({ setUpdated, updated }) => {
   const initialRecipe = {
-    title: "",
-    category: "", // Added category field
-    ingredients: "",
-    instructions: "",
+    title: '',
+    category: '',
+    ingredients: '',
+    instructions: '',
+    imageURL: '',
   };
 
   const [recipe, setRecipe] = useState(initialRecipe);
   const [file, setFile] = useState(null);
-  const [imageURL, setImageURL] = useState("");
+  const [imageURL, setImageURL] = useState('');
+  const [fileLabel, setFileLabel] = useState('No file chosen');
   const navigate = useNavigate();
 
-  function handleChange(e) {
-    setRecipe({ ...recipe, [e.target.id]: e.target.value });
-  }
+  useEffect(() => {
+    // Any initial setup can go here if needed
+  }, []);
 
-  function handleFileChange(e) {
+  const handleChange = (e) => {
+    setRecipe({ ...recipe, [e.target.id]: e.target.value });
+  };
+
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
     setFile(file);
     setImageURL(URL.createObjectURL(file));
-  }
+    setFileLabel(file ? file.name : 'No file chosen');
+  };
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("title", recipe.title);
-    formData.append("category", recipe.category); // Append category field
-    formData.append("ingredients", recipe.ingredients);
-    formData.append("instructions", recipe.instructions);
-    formData.append("image", file); // Append file data
+    const recipeData = {
+      title: recipe.title,
+      category: recipe.category,
+      ingredients: recipe.ingredients,
+      instructions: recipe.instructions,
+      imageURL: imageURL, // Directly using imageURL from state
+    };
 
     try {
-      const response = await fetch("http://localhost:3002/recipes", {
-        method: "POST",
-        body: formData,
+      const response = await fetch('http://localhost:3002/recipes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(recipeData),
       });
 
       const data = await response.json();
       console.log(data);
       setUpdated(!updated);
       setRecipe(initialRecipe);
-      navigate("/food-recipe");
+      navigate('/food-recipe');
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
-  }
+  };
 
   return (
     <div className="container-add-recipe">
