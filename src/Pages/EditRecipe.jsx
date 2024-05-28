@@ -55,7 +55,7 @@ const SubmitButton = styled.button`
 `;
 
 const EditRecipe = ({ setUpdated, updated }) => {
-    const { id } = useParams();
+    const { id } = useParams();//
     const [recipe, setRecipe] = useState({
         title: '',
         ingredients: '',

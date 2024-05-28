@@ -4,12 +4,15 @@ import "../style/NavigationBar.css";
 import logo from "../assets/logo.png";
 import { useRef } from 'react';
 
-function NavigationBar() {
+function NavigationBar({isAuthenticated}) {
   const contactRef = useRef(null);
 
   const handleContactClick = () => {
     contactRef.current.scrollIntoView({ behavior: 'smooth' });
+
   };
+  const username = localStorage.getItem('username');
+
 
   return (
     <header className="header" id="header">
@@ -21,27 +24,29 @@ function NavigationBar() {
           <nav>
             <ul>
               <li><Link to="/food-recipe">FOOD RECIPES</Link></li>
-              <li><Link to="/my-recipes">MY RECIPES</Link></li>
               <li><span onClick={handleContactClick}>CONTACT US</span></li>
+              {isAuthenticated && <li><Link to="/my-recipes">My profile</Link></li>}
+              {isAuthenticated && <li><Link to="/add-recipe">add recipe</Link></li>}
+              {isAuthenticated && <li><Link to="/edit-recipe/:id">edit recipe</Link></li>}
+
+              
+              {isAuthenticated && <li>{username}</li>}
+
+
+
+
             </ul>
           </nav>
         </div>
         <div className="auth-buttons">
-          <Link to="/login">Login</Link>
-          <Link to="/signup"><button>Signup</button></Link>
+        {!isAuthenticated && <Link to="/login">Login</Link>}
+          {!isAuthenticated && <Link to="/signup"><button>Signup</button></Link>}
         </div>
         <nav>
-          <ul>
-            <li><Link to="/food-recipe">FOOD RECIPES</Link></li>
-            <li><span onClick={handleContactClick}>CONTACT US</span></li>
-
-          </ul>
+        
         </nav>
       </div>
-      <div className="auth-buttons">
-        <Link to="/login">Login</Link>
-        <Link to="/signup"><button>Signup</button></Link>
-      </div>
+   
     </header>
   );
 }

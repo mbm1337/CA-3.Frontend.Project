@@ -9,31 +9,27 @@ import AddRecipe from './Pages/AddRecipe';
 import Home from './layout/home';
 import EditRecipe from './Pages/EditRecipe';
 import UserRecipes from './Pages/UserRecipes';
-import Reviews from './Pages/Reviews';
 import "./App.css"
 
 function App() {
-  const [user, setUser] = useState([]);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState(() => {
+  //   return localStorage.getItem('token') ? true : false;
+    
+  // });
 
-  const handleLogout = () => {
-    setUser([]);
-    setIsLoggedIn(false);
-  };
-
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   return (
     <Router>
       <div>
-        <NavigationBar />
+        <NavigationBar isAuthenticated={isAuthenticated} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Register />} />
-          <Route path="/addrecipe" element={<AddRecipe />} />
-          <Route path="/food-recipe" element={<FoodRecipeList />}>
-          <Route path="/edit-recipe/:id" element={<EditRecipe />} />
+          <Route path="/login"  element={<Login setIsAuthenticated={setIsAuthenticated}  />} />
+          <Route path="/signup" element={<Register setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path="/add-recipe" element={<AddRecipe />} />
           <Route path="/my-recipes" element={<UserRecipes />} />
-          </Route>
+          <Route path="/edit-recipe/:id" element={<EditRecipe />} />
+          <Route path="/food-recipe" element={<FoodRecipeList />} />
         </Routes>
       </div>
     </Router>
