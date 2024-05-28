@@ -5,7 +5,7 @@ import Login from './auth/Login';
 import FoodRecipeList from './Pages/FoodRecipeList';
 import Register from './auth/Register';
 import NavigationBar from './layout/NavBar';
-import AddRecipe from './Pages/AddRecipe';
+import AddRecipe from './Pages/addRecipe';
 import Home from './layout/home';
 import EditRecipe from './Pages/EditRecipe';
 import UserRecipes from './Pages/UserRecipes';
@@ -31,8 +31,8 @@ function App() {
           <Route path="/signup" element={<Register />} />
           <Route path="/addrecipe" element={<AddRecipe />} />
           <Route path="/food-recipe" element={<FoodRecipeList />}>
-          <Route path="/edit-recipe/:id" element={<EditRecipe />} />
-          <Route path="/my-recipes" element={<UserRecipes />} />
+          <Route path="edit-recipe/:id" element={<EditRecipe />} />
+          <Route path="my-recipes" element={<UserRecipes />} />
           </Route>
         </Routes>
       </div>
