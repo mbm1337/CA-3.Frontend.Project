@@ -10,6 +10,7 @@ import Home from './layout/home';
 import EditRecipe from './Pages/EditRecipe';
 import UserRecipes from './Pages/UserRecipes';
 import Reviews from './Pages/Reviews';
+import AdminPanel from './Pages/AdminPanel';
 import "./App.css"
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path="edit-recipe/:id" element={<EditRecipe />} />
           <Route path="my-recipes" element={<UserRecipes />} />
           </Route>
+          <Route path="/admin" element={<AdminPanel />} />
         </Routes>
       </div>
     </Router>

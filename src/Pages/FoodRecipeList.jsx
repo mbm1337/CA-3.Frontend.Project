@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import Category from './Category';
+import { BASE_URL_DEV } from "../Utils/globalvariables";
 
 const FoodRecipeList = () => {
   const [recipes, setRecipes] = useState([]);
@@ -12,7 +13,7 @@ const FoodRecipeList = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch("http://localhost:3002/recipes");
+        const response = await fetch(`${BASE_URL_DEV}/recipe`);
         const data = await response.json();
         setRecipes(data);
       } catch (error) {
@@ -36,8 +37,8 @@ const FoodRecipeList = () => {
 
   
   const filteredRecipes = recipes.filter(recipe =>
-    recipe.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-    (filterCategory ? recipe.category.toLowerCase() === filterCategory.toLowerCase() : true)
+    recipe.title && recipe.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
+    (filterCategory ? recipe.category && recipe.category.toLowerCase() === filterCategory.toLowerCase() : true)
   );
   
 const handleBestReviewedClick = () => {

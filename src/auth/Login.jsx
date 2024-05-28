@@ -65,7 +65,8 @@ const Login = () => {
       console.log('Response', response);
       if (response && response.token) {
         console.log('Login successful, navigating to /dashboard');
-        navigate('/dashboard');
+        localStorage.setItem('token', response.token); // Save token to localStorage
+        navigate('/admin');
       } else {
         setError('Invalid username or password');
       }
