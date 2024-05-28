@@ -8,7 +8,7 @@ const UserRecipes = () => {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await fetch("http://localhost:3002/user/recipes", {
+                const response = await fetch(`${BASE_URL_DEV}/recipe`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
