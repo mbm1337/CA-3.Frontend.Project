@@ -1,14 +1,14 @@
 import { BASE_URL_DEV } from "../Utils/globalvariables";
 
-export const addRecipe = async (title, category, ingredients, instructions, imageURL) => {
+export const addRecipe = async (name, category, ingredients, instructions, imageUrl) => {
     try {
-        const result = await fetch(`${BASE_URL_DEV}/recipe/${id}`, {
+        const result = await fetch(`${BASE_URL_DEV}/recipe`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
-            body: JSON.stringify({ title, category, ingredients, instructions, imageURL })
+            body: JSON.stringify({ name, category, ingredients, instructions, imageUrl })
         });
 
         if (!result.ok) {

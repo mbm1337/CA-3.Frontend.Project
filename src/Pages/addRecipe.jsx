@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addRecipe } from '../service/ApiRecipes';
-const AddRecipe = ({ setUpdated, updated,isloggedin }) => {
+
+const AddRecipe = ({ setUpdated, updated, isloggedin }) => {
   const initialRecipe = {
     title: '',
     category: '',
     ingredients: '',
     instructions: '',
-    imageURL: '',
+    imageUrl: '',
   };
 
   const [recipe, setRecipe] = useState(initialRecipe);
   const [file, setFile] = useState(null);
-  const [imageURL, setImageURL] = useState('');
+  const [imageUrl, setImageURL] = useState('');
   const [fileLabel, setFileLabel] = useState('No file chosen');
   const navigate = useNavigate();
 
@@ -31,7 +32,13 @@ const AddRecipe = ({ setUpdated, updated,isloggedin }) => {
     e.preventDefault();
 
     try {
-      const data = await addRecipe(recipe.name, recipe.category, recipe.ingredients, recipe.instructions, imageURL);
+      const data = await addRecipe(
+        recipe.name,
+        recipe.category,
+        recipe.ingredients,
+        recipe.instructions,
+        imageUrl
+      );
       console.log('Recipe added successfully:', data);
       setUpdated(!updated);
       setRecipe(initialRecipe);
@@ -50,7 +57,7 @@ const AddRecipe = ({ setUpdated, updated,isloggedin }) => {
           <input
             type="text"
             value={recipe.name}
-            id="title"
+            id="name"
             placeholder="Enter recipe title"
             onChange={handleChange}
             required
@@ -90,15 +97,20 @@ const AddRecipe = ({ setUpdated, updated,isloggedin }) => {
         <div className="form-group">
           <label>Recipe Image:</label>
           <input type="file" onChange={handleFileChange} required />
-          {imageURL && (
-            <img
-              src={imageURL}
-              alt="Selected"
-              style={{ maxWidth: "200px", marginTop: "10px" }}
-            />
+          {imageUrl && (
+            <div>
+              <img
+                src={imageUrl}
+                alt="Selected"
+                style={{ maxWidth: '200px', marginTop: '10px' }}
+              />
+              <p>Image URL: {fileLabel}</p> {/* Display filename instead of full URL */}
+            </div>
           )}
         </div>
-        <button type="submit" className="add-btn">Add Recipe</button>
+        <button type="submit" className="add-btn">
+          Add Recipe
+        </button>
       </form>
     </div>
   );
