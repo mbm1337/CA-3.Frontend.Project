@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate, NavLink } from 'react-router-dom'; // Import useNavigate and NavLink
-
-import { useNavigate } from 'react-router-dom';
 import { login } from '../service/apiFacade';
 
 
@@ -69,7 +67,7 @@ const Login = () => {
       if (response && response.token) {
         console.log('Login successful, navigating to /dashboard');
         localStorage.setItem('token', response.token); // Save token to localStorage
-        navigate('/admin');
+        navigate('/');
       } else {
         setError('Invalid username or password');
       }

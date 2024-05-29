@@ -11,7 +11,9 @@ function NavigationBar({isAuthenticated}) {
     contactRef.current.scrollIntoView({ behavior: 'smooth' });
 
   };
-  const username = localStorage.getItem('username');
+  const username = localStorage.getItem('email');
+
+  
 
 
   return (
@@ -30,7 +32,6 @@ function NavigationBar({isAuthenticated}) {
               {isAuthenticated && <li><Link to="/edit-recipe/:id">edit recipe</Link></li>}
 
               
-              {isAuthenticated && <li>{username}</li>}
 
 
 

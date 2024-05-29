@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const AddRecipe = ({ setUpdated, updated }) => {
+import { addRecipe } from '../service/ApiRecipes';
+const AddRecipe = ({ setUpdated, updated,isloggedin }) => {
   const initialRecipe = {
     title: '',
     category: '',
@@ -15,10 +15,6 @@ const AddRecipe = ({ setUpdated, updated }) => {
   const [imageURL, setImageURL] = useState('');
   const [fileLabel, setFileLabel] = useState('No file chosen');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Any initial setup can go here if needed
-  }, []);
 
   const handleChange = (e) => {
     setRecipe({ ...recipe, [e.target.id]: e.target.value });
@@ -34,38 +30,21 @@ const AddRecipe = ({ setUpdated, updated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const recipeData = {
-      title: recipe.title,
-      category: recipe.category,
-      ingredients: recipe.ingredients,
-      instructions: recipe.instructions,
-      imageURL: imageURL, // Directly using imageURL from state
-    };
-
     try {
-      const response = await fetch('http://localhost:3002/recipes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify(recipeData),
-      });
-
-      const data = await response.json();
-      console.log(data);
+      const data = await addRecipe(recipe.title, recipe.category, recipe.ingredients, recipe.instructions, imageURL);
+      console.log('Recipe added successfully:', data);
       setUpdated(!updated);
       setRecipe(initialRecipe);
       navigate('/food-recipe');
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error adding recipe:', error);
     }
   };
 
   return (
     <div className="container-add-recipe">
       <form onSubmit={handleSubmit}>
-      <h2>Recipe Add</h2>
+        <h2>Recipe Add</h2>
         <div className="form-group">
           <label>Recipe Title:</label>
           <input
@@ -78,7 +57,7 @@ const AddRecipe = ({ setUpdated, updated }) => {
           />
         </div>
         <div className="form-group">
-          <label>Recipe category:</label>
+          <label>Recipe Category:</label>
           <input
             type="text"
             value={recipe.category}
@@ -89,7 +68,7 @@ const AddRecipe = ({ setUpdated, updated }) => {
           />
         </div>
         <div className="form-group">
-          <label>Recipe ingredients:</label>
+          <label>Recipe Ingredients:</label>
           <textarea
             value={recipe.ingredients}
             id="ingredients"
@@ -99,7 +78,7 @@ const AddRecipe = ({ setUpdated, updated }) => {
           />
         </div>
         <div className="form-group">
-          <label>Recipe instructions:</label>
+          <label>Recipe Instructions:</label>
           <textarea
             value={recipe.instructions}
             id="instructions"

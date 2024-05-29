@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { BrowserRouter as Router, Route, Routes,Link ,Outlet} from 'react-router-dom';
 
 import Login from './auth/Login';
@@ -9,18 +9,19 @@ import AddRecipe from './Pages/addRecipe';
 import Home from './layout/home';
 import EditRecipe from './Pages/EditRecipe';
 import UserRecipes from './Pages/UserRecipes';
-import Reviews from './Pages/Reviews';
 import AdminPanel from './Pages/AdminPanel';
 
 import "./App.css"
 
 function App() {
-  // const [isAuthenticated, setIsAuthenticated] = useState(() => {
-  //   return localStorage.getItem('token') ? true : false;
+   const [isAuthenticated, setIsAuthenticated] = useState(() => {
+ return localStorage.getItem('token') ? true : false;
     
-  // });
+   });
+   useEffect(() => {
+  }, [isAuthenticated]);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
   return (
     <Router>
       <div>
@@ -30,7 +31,7 @@ function App() {
 
           <Route path="/login"  element={<Login setIsAuthenticated={setIsAuthenticated}  />} />
           <Route path="/signup" element={<Register setIsAuthenticated={setIsAuthenticated} />} />
-          <Route path="/add-recipe" element={<AddRecipe />} />
+          <Route path="/add-recipe" element={<AddRecipe isloggedin = {setIsAuthenticated}/>} />
           <Route path="/my-recipes" element={<UserRecipes />} />
           <Route path="/edit-recipe/:id" element={<EditRecipe />} />
           <Route path="/food-recipe" element={<FoodRecipeList />} >

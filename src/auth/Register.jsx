@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-//import { register } from '../service/apiFacade';
+import { register } from '../service/apiFacade';
 
 const RegisterForm = styled.form`
 background-color: white;
@@ -51,6 +51,7 @@ const Input = styled.input`
 
 const Register = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
+  const[user,setUser]= ('');
   const handleRegister = async (event) => {
     event.preventDefault();
     
