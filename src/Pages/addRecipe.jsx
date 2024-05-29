@@ -31,7 +31,7 @@ const AddRecipe = ({ setUpdated, updated,isloggedin }) => {
     e.preventDefault();
 
     try {
-      const data = await addRecipe(recipe.title, recipe.category, recipe.ingredients, recipe.instructions, imageURL);
+      const data = await addRecipe(recipe.name, recipe.category, recipe.ingredients, recipe.instructions, imageURL);
       console.log('Recipe added successfully:', data);
       setUpdated(!updated);
       setRecipe(initialRecipe);
@@ -49,7 +49,7 @@ const AddRecipe = ({ setUpdated, updated,isloggedin }) => {
           <label>Recipe Title:</label>
           <input
             type="text"
-            value={recipe.title}
+            value={recipe.name}
             id="title"
             placeholder="Enter recipe title"
             onChange={handleChange}

@@ -53,7 +53,7 @@ const Div = styled.div`
 `;
 
 
-const Login = () => {
+const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -67,19 +67,12 @@ const Login = () => {
       if (response && response.token) {
         console.log('Login successful, navigating to /dashboard');
         localStorage.setItem('token', response.token); // Save token to localStorage
+        localStorage.setItem('username', username);
+        setIsAuthenticated(true); // Update isAuthenticated
         navigate('/');
       } else {
         setError('Invalid username or password');
       }
-
-
-      console.log('Token saved in localStorage:', data.token);
-      setIsAuthenticated(true);
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('username', userInfo.username); 
-
-      navigate('/home');
-
     } catch (err) {
       setError('An error occurred');
     }

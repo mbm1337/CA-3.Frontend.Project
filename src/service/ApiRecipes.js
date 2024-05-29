@@ -2,7 +2,7 @@ import { BASE_URL_DEV } from "../Utils/globalvariables";
 
 export const addRecipe = async (title, category, ingredients, instructions, imageURL) => {
     try {
-        const result = await fetch(`${BASE_URL_DEV}/recipe`, {
+        const result = await fetch(`${BASE_URL_DEV}/recipe/${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

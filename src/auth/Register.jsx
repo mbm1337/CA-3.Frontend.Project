@@ -62,10 +62,10 @@ const Register = ({ setIsAuthenticated }) => {
       const data = await register(username, password); // Call register function from apiFacade
       // Assuming registration is successful
       setIsAuthenticated(true);
-      setUser({ username: username, roles: ['user'] });
+      setUser({ email: email, roles: ['user'] });
 
       // Redirect to home page after successful registration
-      navigate('/home'); // Navigate to home page
+      navigate('/'); // Navigate to home page
     } catch (error) {
       console.error('Registration error:', error.message);
       // Handle registration error, e.g., display error message

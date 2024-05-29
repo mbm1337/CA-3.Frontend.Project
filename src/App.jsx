@@ -14,14 +14,14 @@ import AdminPanel from './Pages/AdminPanel';
 import "./App.css"
 
 function App() {
-   const [isAuthenticated, setIsAuthenticated] = useState(() => {
+ /*  const [isAuthenticated, setIsAuthenticated] = useState(() => {
  return localStorage.getItem('token') ? true : false;
     
    });
    useEffect(() => {
-  }, [isAuthenticated]);
+  }, [isAuthenticated]);*/
 
-
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   return (
     <Router>
       <div>
