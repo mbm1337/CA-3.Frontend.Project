@@ -52,4 +52,9 @@
       right: -50px;  /* Negative value to move it right */
       padding: auto;
     }
-   
+    .center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }

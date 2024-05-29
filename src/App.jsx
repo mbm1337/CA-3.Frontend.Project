@@ -9,6 +9,9 @@ import AddRecipe from './Pages/addRecipe';
 import Home from './layout/home';
 import EditRecipe from './Pages/EditRecipe';
 import UserRecipes from './Pages/UserRecipes';
+import Reviews from './Pages/Reviews';
+import AdminPanel from './Pages/AdminPanel';
+
 import "./App.css"
 
 function App() {
@@ -24,12 +27,16 @@ function App() {
         <NavigationBar isAuthenticated={isAuthenticated} />
         <Routes>
           <Route path="/" element={<Home />} />
+
           <Route path="/login"  element={<Login setIsAuthenticated={setIsAuthenticated}  />} />
           <Route path="/signup" element={<Register setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/add-recipe" element={<AddRecipe />} />
           <Route path="/my-recipes" element={<UserRecipes />} />
           <Route path="/edit-recipe/:id" element={<EditRecipe />} />
-          <Route path="/food-recipe" element={<FoodRecipeList />} />
+          <Route path="/food-recipe" element={<FoodRecipeList />} >
+          </Route>
+          <Route path="/admin" element={<AdminPanel />} />
+
         </Routes>
       </div>
     </Router>

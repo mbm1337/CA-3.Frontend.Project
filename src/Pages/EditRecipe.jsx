@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { BASE_URL_DEV } from "../Utils/globalvariables";
 
 const Container = styled.div`
     display: flex;
@@ -71,7 +72,7 @@ const EditRecipe = ({ setUpdated, updated }) => {
     useEffect(() => {
         const fetchRecipe = async () => {
             try {
-                const response = await fetch(`http://localhost:3002/recipes/${id}`, {
+                const response = await fetch(`${BASE_URL_DEV}/recipe/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
@@ -109,7 +110,7 @@ const EditRecipe = ({ setUpdated, updated }) => {
         };
 
         try {
-            await fetch(`http://localhost:3002/recipes/${id}`, {
+            await fetch(`${BASE_URL_DEV}/recipe/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

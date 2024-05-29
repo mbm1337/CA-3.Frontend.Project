@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL_DEV } from "../Utils/globalvariables";
 
 const UserRecipes = () => {
     const [recipes, setRecipes] = useState([]);
@@ -8,7 +9,7 @@ const UserRecipes = () => {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await fetch("http://localhost:3002/user/recipes", {
+                const response = await fetch(`${BASE_URL_DEV}/recipe`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
@@ -25,7 +26,7 @@ const UserRecipes = () => {
 
     const handleDelete = async (id) => {
         try {
-            await fetch(`http://localhost:3002/recipes/${id}`, {
+            await fetch(`${BASE_URL_DEV}/recipe/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
