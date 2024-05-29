@@ -48,8 +48,8 @@ const UserRecipes = () => {
             <ul>
                 {recipes.map((recipe) => (
                     <li key={recipe.id}>
-                        <h3>{recipe.title}</h3>
-                        <img src={recipe.imageURL} alt={recipe.title} style={{ maxWidth: '200px' }} />
+                        <h3>{recipe.name}</h3>
+                        <img src={recipe.imageUrl} alt={recipe.name} style={{ maxWidth: '200px' }} />
                         <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
                         <p><strong>Instructions:</strong> {recipe.instructions}</p>
                         <p><strong>Category:</strong> {recipe.category}</p>

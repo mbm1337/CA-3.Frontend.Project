@@ -58,11 +58,11 @@ const SubmitButton = styled.button`
 const EditRecipe = ({ setUpdated, updated }) => {
     const { id } = useParams();//
     const [recipe, setRecipe] = useState({
-        title: '',
+        name: '',
         ingredients: '',
         instructions: '',
         category: '',
-        imageURL: '',
+        imageUrl: '',
     });
     const [file, setFile] = useState(null);
     const [imageURL, setImageURL] = useState('');
@@ -103,7 +103,7 @@ const EditRecipe = ({ setUpdated, updated }) => {
         e.preventDefault();
 
         const recipeData = {
-            title: recipe.title,
+            name: recipe.name,
             ingredients: recipe.ingredients,
             instructions: recipe.instructions,
             category: recipe.category,
@@ -133,8 +133,8 @@ const EditRecipe = ({ setUpdated, updated }) => {
                 <FormContainer onSubmit={handleSubmit}>
                     <input
                         type="text"
-                        value={recipe.title}
-                        id="title"
+                        value={recipe.name}
+                        id="name"
                         placeholder="Enter recipe title"
                         onChange={handleChange}
                         required
