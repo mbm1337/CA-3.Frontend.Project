@@ -1,8 +1,10 @@
-# React + Vite
+# CA-3 Frontend Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+Morten Bomholt Mikkelsen, cph-mm769@cphbusiness.dk , GitHub: mbm1337
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Mustafa Altinkaya, cph-ma763@cphbusiness.dk , GitHub: altinkaya
+
+Sumaia El-Kalache, cph-se160@cphbusiness.dk , GitHub: sumaiak
+
+Mounir Salem, cph-ms848@cphbusiness.dk , GitHub: ETHMUNI
