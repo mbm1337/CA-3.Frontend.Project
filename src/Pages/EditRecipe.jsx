@@ -77,9 +77,12 @@ const EditRecipe = ({ setUpdated, updated }) => {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
                 });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch recipe');
+                }
                 const data = await response.json();
                 setRecipe(data);
-                setImageURL(data.imageURL);
+                setImageURL(data.imageUrl);
             } catch (error) {
                 console.error('Error fetching recipe:', error);
             }
