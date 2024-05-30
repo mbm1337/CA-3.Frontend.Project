@@ -1,24 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { addRecipe } from '../service/ApiRecipes';
+import Category from './Category';
 
-const AddRecipe = ({ setUpdated, updated }) => {
+const AddRecipe = () => {
+  const [updated, setUpdated] = useState('');
+  
+
+
+
   const initialRecipe = {
     title: '',
     category: '',
     ingredients: '',
     instructions: '',
-    imageURL: '',
+    imageUrl: '',
   };
 
   const [recipe, setRecipe] = useState(initialRecipe);
   const [file, setFile] = useState(null);
-  const [imageURL, setImageURL] = useState('');
+  const [imageUrl, setImageURL] = useState('');
   const [fileLabel, setFileLabel] = useState('No file chosen');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Any initial setup can go here if needed
-  }, []);
 
   const handleChange = (e) => {
     setRecipe({ ...recipe, [e.target.id]: e.target.value });
@@ -34,62 +37,49 @@ const AddRecipe = ({ setUpdated, updated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const recipeData = {
-      title: recipe.title,
-      category: recipe.category,
-      ingredients: recipe.ingredients,
-      instructions: recipe.instructions,
-      imageURL: imageURL, // Directly using imageURL from state
-    };
-
     try {
-      const response = await fetch('http://localhost:3002/recipes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify(recipeData),
-      });
+      const email = localStorage.getItem('username');
 
-      const data = await response.json();
-      console.log(data);
+      const data = await addRecipe(
+        recipe.name,
+        recipe.category,
+        recipe.ingredients,
+        recipe.instructions,
+        imageUrl,
+        email 
+      );
+      console.log('Recipe added successfully:', data);
+      
       setUpdated(!updated);
       setRecipe(initialRecipe);
       navigate('/food-recipe');
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error adding recipe:', error);
     }
   };
 
   return (
     <div className="container-add-recipe">
       <form onSubmit={handleSubmit}>
-      <h2>Recipe Add</h2>
+        <h2>Recipe Add</h2>
         <div className="form-group">
           <label>Recipe Title:</label>
           <input
             type="text"
-            value={recipe.title}
-            id="title"
+            value={recipe.name}
+            id="name"
             placeholder="Enter recipe title"
             onChange={handleChange}
             required
           />
         </div>
         <div className="form-group">
-          <label>Recipe category:</label>
-          <input
-            type="text"
-            value={recipe.category}
-            id="category"
-            placeholder="Enter category"
-            onChange={handleChange}
-            required
-          />
+        <label>Recipe category:</label>
+        <Category/>
+       
         </div>
         <div className="form-group">
-          <label>Recipe ingredients:</label>
+          <label>Recipe Ingredients:</label>
           <textarea
             value={recipe.ingredients}
             id="ingredients"
@@ -99,7 +89,7 @@ const AddRecipe = ({ setUpdated, updated }) => {
           />
         </div>
         <div className="form-group">
-          <label>Recipe instructions:</label>
+          <label>Recipe Instructions:</label>
           <textarea
             value={recipe.instructions}
             id="instructions"
@@ -111,15 +101,20 @@ const AddRecipe = ({ setUpdated, updated }) => {
         <div className="form-group">
           <label>Recipe Image:</label>
           <input type="file" onChange={handleFileChange} required />
-          {imageURL && (
-            <img
-              src={imageURL}
-              alt="Selected"
-              style={{ maxWidth: "200px", marginTop: "10px" }}
-            />
+          {imageUrl && (
+            <div>
+              <img
+                src={imageUrl}
+                alt="Selected"
+                style={{ maxWidth: '200px', marginTop: '10px' }}
+              />
+              <p>Image URL: {fileLabel}</p> {/* Display filename instead of full URL */}
+            </div>
           )}
         </div>
-        <button type="submit" className="add-btn">Add Recipe</button>
+        <button type="submit" className="add-btn">
+          Add Recipe
+        </button>
       </form>
     </div>
   );

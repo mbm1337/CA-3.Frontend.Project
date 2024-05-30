@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { BASE_URL_DEV } from "../Utils/globalvariables";
 
 const Container = styled.div`
     display: flex;
@@ -57,11 +58,11 @@ const SubmitButton = styled.button`
 const EditRecipe = ({ setUpdated, updated }) => {
     const { id } = useParams();//
     const [recipe, setRecipe] = useState({
-        title: '',
+        name: '',
         ingredients: '',
         instructions: '',
         category: '',
-        imageURL: '',
+        imageUrl: '',
     });
     const [file, setFile] = useState(null);
     const [imageURL, setImageURL] = useState('');
@@ -71,14 +72,17 @@ const EditRecipe = ({ setUpdated, updated }) => {
     useEffect(() => {
         const fetchRecipe = async () => {
             try {
-                const response = await fetch(`http://localhost:3002/recipes/${id}`, {
+                const response = await fetch(`${BASE_URL_DEV}/recipe/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
                 });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch recipe');
+                }
                 const data = await response.json();
                 setRecipe(data);
-                setImageURL(data.imageURL);
+                setImageURL(data.imageUrl);
             } catch (error) {
                 console.error('Error fetching recipe:', error);
             }
@@ -102,14 +106,14 @@ const EditRecipe = ({ setUpdated, updated }) => {
         e.preventDefault();
 
         const recipeData = {
-            title: recipe.title,
+            name: recipe.name,
             ingredients: recipe.ingredients,
             instructions: recipe.instructions,
             category: recipe.category,
         };
 
         try {
-            await fetch(`http://localhost:3002/recipes/${id}`, {
+            await fetch(`${BASE_URL_DEV}/recipe/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -132,8 +136,8 @@ const EditRecipe = ({ setUpdated, updated }) => {
                 <FormContainer onSubmit={handleSubmit}>
                     <input
                         type="text"
-                        value={recipe.title}
-                        id="title"
+                        value={recipe.name}
+                        id="name"
                         placeholder="Enter recipe title"
                         onChange={handleChange}
                         required

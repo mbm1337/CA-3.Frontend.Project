@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-//import { register } from '../service/apiFacade';
+import { register } from '../service/apiFacade';
 
 const RegisterForm = styled.form`
 background-color: white;
@@ -49,7 +49,7 @@ const Input = styled.input`
 
 
 
-const Register = ({ setIsAuthenticated }) => {
+const Register = () => {
   const navigate = useNavigate();
   const handleRegister = async (event) => {
     event.preventDefault();
@@ -58,15 +58,16 @@ const Register = ({ setIsAuthenticated }) => {
     const password = event.target.password.value;
 
     try {
-      const data = await register(username, password); // Call register function from apiFacade
-      // Assuming registration is successful
-      setIsAuthenticated(true);
-      setUser({ username: username, roles: ['user'] });
-
+      const data = await register(username, password); //
+      console.log(data+  "sumaia-register")
+      if(data){
+      alert("account has been created")
       // Redirect to home page after successful registration
-      navigate('/home'); // Navigate to home page
+      navigate('/'); // Navigate to home page
+      }
     } catch (error) {
       console.error('Registration error:', error.message);
+      alert("the email already exist ")
       // Handle registration error, e.g., display error message
     }
   };
@@ -74,10 +75,9 @@ const Register = ({ setIsAuthenticated }) => {
   return (
     <Div>
     <RegisterForm onSubmit={handleRegister}>
-       <Label>Name</Label>
-      <Input type="text" name="name" placeholder="Enter you name " required />
+      
       <Label>Email</Label>
-      <Input type="text" name="username" placeholder="Enter Username" required />
+      <Input type="email" name="username" placeholder="Enter Username" required />
 
       <Label>Password</Label>
       <Input type="password" name="password" placeholder="Enter password" required />

@@ -1,8 +1,9 @@
-
-
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate, NavLink } from 'react-router-dom'; // Import useNavigate and NavLink
+import { login } from '../service/apiFacade';
+
+
 
 
 const Form = styled.form`
@@ -60,56 +61,47 @@ const Login = ({ setIsAuthenticated }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(null);
-
     try {
-      const data = await login(username, password);
-      if (!data) {
-        setError('No data returned from login');
-        return;
+      const response = await login(username, password);
+      console.log('Response', response);
+      
+      if (response && response.token ) {
+        //resposnse sends dataa
+        console.log('Login successful, navigating to /dashboard');
+        localStorage.setItem('token', response.token); // Save token to localStorage
+        localStorage.setItem('username', username);
+        console.log(username)
+        setIsAuthenticated(true); // Update isAuthenticated
+        navigate('/');
+      } else {
+        setError('Invalid username or password');
       }
-
-      console.log('Token saved in localStorage:', data.token);
-      setIsAuthenticated(true);
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('username', userInfo.username); 
-
-      navigate('/home');
-    } catch (error) {
-      setError('Failed to login');
-      console.error(error);
+    } catch (err) {
+      setError('An error occurred');
     }
   };
 
   return (
     <Div>
-
-    <Form onSubmit={handleSubmit}>
-      <Label>Username</Label>
-      <Input
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        required
-      />
-
-      <Label>Password</Label>
-      <Input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-
-      {error && <Error>{error}</Error>}
-
-      <Input type="submit" value="Login" className='form--submit' />
-
-      {/* Link to Register page */}
-      <Btn><NavLink to="/signup">Register</NavLink></Btn>
-    </Form>
+      <Form onSubmit={handleSubmit}>
+        <Label htmlFor="username">Username</Label>
+        <Input
+          id="username"
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <Label htmlFor="password">Password</Label>
+        <Input
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {error && <Error>{error}</Error>}
+        <button type="submit" onClick={() => console.log('Button clicked')}>Login</button>
+      </Form>
     </Div>
-
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL_DEV } from "../Utils/globalvariables";
 
 const UserRecipes = () => {
     const [recipes, setRecipes] = useState([]);
@@ -8,7 +9,7 @@ const UserRecipes = () => {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await fetch("http://localhost:3002/user/recipes", {
+                const response = await fetch(`${BASE_URL_DEV}/recipe`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
@@ -25,7 +26,7 @@ const UserRecipes = () => {
 
     const handleDelete = async (id) => {
         try {
-            await fetch(`http://localhost:3002/recipes/${id}`, {
+            await fetch(`${BASE_URL_DEV}/recipe/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -47,8 +48,8 @@ const UserRecipes = () => {
             <ul>
                 {recipes.map((recipe) => (
                     <li key={recipe.id}>
-                        <h3>{recipe.title}</h3>
-                        <img src={recipe.imageURL} alt={recipe.title} style={{ maxWidth: '200px' }} />
+                        <h3>{recipe.name}</h3>
+                        <img src={recipe.imageUrl} alt={recipe.name} style={{ maxWidth: '200px' }} />
                         <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
                         <p><strong>Instructions:</strong> {recipe.instructions}</p>
                         <p><strong>Category:</strong> {recipe.category}</p>
