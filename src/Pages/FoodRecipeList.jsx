@@ -35,7 +35,7 @@ const FoodRecipeList = () => {
   };
 
   const filteredRecipes = recipes.filter(recipe =>
-      recipe.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      recipe.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
       (filterCategory ? recipe.category.toLowerCase() === filterCategory.toLowerCase() : true)
   );
 
@@ -63,13 +63,12 @@ const FoodRecipeList = () => {
           <div className='recipes-list'>
               {filteredRecipes.map((recipe) => (
                   <div key={recipe.id} className='recipe-item'>
-                      <img src={recipe.image} alt={recipe.title} style={{ maxWidth: '200px' }} />
+                      <img src={recipe.image} alt={recipe.name} style={{ maxWidth: '200px' }} />
                       <div className='recipe-details'>
-                          <h3>{recipe.title}</h3>
+                          <h3>{recipe.name}</h3>
                           <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
                           <p><strong>Instructions:</strong> {recipe.instructions}</p>
                           <p><strong>Category:</strong> {recipe.category}</p>
-                          <p><strong>Rating:</strong> {recipe.review}</p>
                       </div>
                   </div>
               ))}

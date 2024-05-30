@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addRecipe } from '../service/ApiRecipes';
+import Category from './Category';
 
-const AddRecipe = ({ setUpdated, updated, isloggedin }) => {
+const AddRecipe = () => {
+  const [updated, setUpdated] = useState('');
+  
+
+
+
   const initialRecipe = {
     title: '',
     category: '',
@@ -32,14 +38,18 @@ const AddRecipe = ({ setUpdated, updated, isloggedin }) => {
     e.preventDefault();
 
     try {
+      const email = localStorage.getItem('username');
+
       const data = await addRecipe(
         recipe.name,
         recipe.category,
         recipe.ingredients,
         recipe.instructions,
-        imageUrl
+        imageUrl,
+        email 
       );
       console.log('Recipe added successfully:', data);
+      
       setUpdated(!updated);
       setRecipe(initialRecipe);
       navigate('/food-recipe');
@@ -64,15 +74,9 @@ const AddRecipe = ({ setUpdated, updated, isloggedin }) => {
           />
         </div>
         <div className="form-group">
-          <label>Recipe Category:</label>
-          <input
-            type="text"
-            value={recipe.category}
-            id="category"
-            placeholder="Enter category"
-            onChange={handleChange}
-            required
-          />
+        <label>Recipe category:</label>
+        <Category/>
+       
         </div>
         <div className="form-group">
           <label>Recipe Ingredients:</label>

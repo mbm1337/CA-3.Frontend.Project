@@ -64,10 +64,13 @@ const Login = ({ setIsAuthenticated }) => {
     try {
       const response = await login(username, password);
       console.log('Response', response);
-      if (response && response.token) {
+      
+      if (response && response.token ) {
+        //resposnse sends dataa
         console.log('Login successful, navigating to /dashboard');
         localStorage.setItem('token', response.token); // Save token to localStorage
         localStorage.setItem('username', username);
+        console.log(username)
         setIsAuthenticated(true); // Update isAuthenticated
         navigate('/');
       } else {
