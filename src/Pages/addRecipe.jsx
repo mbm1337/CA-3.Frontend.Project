@@ -20,6 +20,8 @@ const AddRecipe = () => {
   const [recipe, setRecipe] = useState(initialRecipe);
   const [file, setFile] = useState(null);
   const [imageUrl, setImageURL] = useState('');
+  const [category, setCategory] = useState('');
+
   const [fileLabel, setFileLabel] = useState('No file chosen');
   const navigate = useNavigate();
 
@@ -57,6 +59,7 @@ const AddRecipe = () => {
       console.error('Error adding recipe:', error);
     }
   };
+ 
 
   return (
     <div className="container-add-recipe">
@@ -75,8 +78,16 @@ const AddRecipe = () => {
         </div>
         <div className="form-group">
         <label>Recipe category:</label>
-        <Category/>
+          <input
+            type="text"
+            value={recipe.category}
+            id="category"
+            placeholder="Enter category"
+            onChange={handleChange}
+            required
+          />
        
+        
         </div>
         <div className="form-group">
           <label>Recipe Ingredients:</label>

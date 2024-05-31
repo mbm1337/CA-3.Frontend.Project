@@ -53,11 +53,12 @@ const Div = styled.div`
 `;
 
 
-const Login = ({ setIsAuthenticated }) => {
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const [updated, setUpdated] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -66,10 +67,12 @@ const Login = ({ setIsAuthenticated }) => {
       console.log('Response', response);
       
       if (response && response.token ) {
-        //resposnse sends dataa
+        //resposnse sends
         console.log('Login successful, navigating to /dashboard');
         localStorage.setItem('token', response.token); // Save token to localStorage
         localStorage.setItem('username', username);
+        setUpdated(!updateda);
+
         console.log(username)
         setIsAuthenticated(true); // Update isAuthenticated
         navigate('/');

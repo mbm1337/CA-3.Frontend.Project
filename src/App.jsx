@@ -16,7 +16,7 @@ import "./App.css";
 import PublicRoutes from './Pages/PublicRoutes';
 
 function App() {
-  //isAuthenticated is being extracted from local storage we connot set it to false otherwise i will logout autmatically
+  //isAuthenticated is being extracted from local storage we connot set it to false otherwise i will
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('token') ? true : false;
   });  const handleLogout = () => {

@@ -10,6 +10,7 @@ const Category = ({ onSubmitCategory }) => {
         setCategory(selectedCategory);
         onSubmitCategory(selectedCategory);
     };
+    
 
     return (
         <div className='category-recipe'>

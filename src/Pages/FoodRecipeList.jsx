@@ -24,7 +24,7 @@ const FoodRecipeList = () => {
   const handleSearchChange = (event) => {
       setSearchQuery(event.target.value);
   };
-
+// categoy = meat then set category to meat 
   const handleCategorySubmit = (category) => {
       setFilterCategory(category);
       console.log(category);
