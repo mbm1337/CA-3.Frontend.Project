@@ -26,13 +26,22 @@ const UserRecipes = () => {
 
     const handleDelete = async (id) => {
         try {
-            await fetch(`${BASE_URL_DEV}/recipe/${id}`, {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${BASE_URL_DEV}/recipe/${localStorage.getItem('username')}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify(id) 
             });
-            setRecipes(recipes.filter(recipe => recipe.id !== id));
+    
+            if (response.ok) {
+                
+                setRecipes(recipes.filter(recipe => recipe.id !== id));
+            } else {
+                console.error('Error deleting recipe:', await response.text());
+            }
         } catch (error) {
             console.error('Error deleting recipe:', error);
         }
