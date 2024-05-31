@@ -16,14 +16,14 @@ import "./App.css";
 import PublicRoutes from './Pages/PublicRoutes';
 
 function App() {
-  //isAuthenticated is being extracted from local storage we connot set it to false otherwise i will logout autmatically
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('token') ? true : false;
-  });  const handleLogout = () => {
+  });
 
+  const handleLogout = () => {
     setIsAuthenticated(false);
+    localStorage.clear();
   };
-  
 
   return (
     <Router>
@@ -31,14 +31,14 @@ function App() {
         <NavigationBar isAuthenticated={isAuthenticated} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<PublicRoutes isAuthenticated={isAuthenticated} component={<Login />}></PublicRoutes>} />
+          <Route path="/login" element={<PublicRoutes isAuthenticated={isAuthenticated} component={<Login setIsAuthenticated={setIsAuthenticated} />} />} />
           <Route path="/signup" element={<Register setIsAuthenticated={setIsAuthenticated} />} />
-          <Route path="/add-recipe" element={<ProtectedRoute isAuthenticated={isAuthenticated} component={<AddRecipe />}></ProtectedRoute>} />
-          <Route path="/my-recipes" element={<ProtectedRoute isAuthenticated={isAuthenticated} component={<UserRecipes />}></ProtectedRoute>} />
-          <Route path="/edit-recipe/:id" element={<ProtectedRoute isAuthenticated={isAuthenticated} component={<EditRecipe />}></ProtectedRoute>} />
+          <Route path="/add-recipe" element={<ProtectedRoute isAuthenticated={isAuthenticated} component={<AddRecipe />} />} />
+          <Route path="/my-recipes" element={<ProtectedRoute isAuthenticated={isAuthenticated} component={<UserRecipes />} />} />
+          <Route path="/edit-recipe/:id" element={<ProtectedRoute isAuthenticated={isAuthenticated} component={<EditRecipe />} />} />
           <Route path="/food-recipe" element={<FoodRecipeList />} />
           <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
-          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/admin" element={<ProtectedRoute isAuthenticated={isAuthenticated} component={<AdminPanel />} />} />
         </Routes>
       </div>
     </Router>

@@ -14,7 +14,8 @@ function NavigationBar({ isAuthenticated }) {
   };
 
   const username = localStorage.getItem('username');
-// this for hsowing the link for lettig them works
+  const roles = JSON.parse(localStorage.getItem('roles')) || [];
+
   return (
     <header className="header" id="header">
       <div className="header-content">
@@ -24,11 +25,11 @@ function NavigationBar({ isAuthenticated }) {
           </div>
           <nav>
             <ul>
-              
               <li><Link to="/food-recipe">FOOD RECIPES</Link></li>
               <li><span onClick={handleContactClick}>CONTACT US</span></li>
               {isAuthenticated && <li><Link to="/my-recipes">My Profile</Link></li>}
               {isAuthenticated && <li><Link to="/add-recipe">Add Recipe</Link></li>}
+              {isAuthenticated && roles.includes('admin') && <li><Link to="/admin">Admin</Link></li>}
             </ul>
           </nav>
         </div>
@@ -37,8 +38,6 @@ function NavigationBar({ isAuthenticated }) {
             <div className="user-info">
               <span>{username}</span>
               <Link to="/logout">logout</Link>
-
-              
             </div>
           ) : (
             <>

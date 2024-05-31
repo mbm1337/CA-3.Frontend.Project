@@ -5,11 +5,11 @@ import { BASE_URL_DEV } from "../Utils/globalvariables";
 const UserRecipes = () => {
     const [recipes, setRecipes] = useState([]);
     const navigate = useNavigate();
-
+    const email = localStorage.getItem('username');
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await fetch(`${BASE_URL_DEV}/recipe`, {
+                const response = await fetch(`${BASE_URL_DEV}/recipe/personal/${username}`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }

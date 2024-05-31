@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addRecipe } from '../service/ApiRecipes';
 import Category from './Category';
+import axios from 'axios'; // Make sure to install axios
 
 const AddRecipe = () => {
   const [updated, setUpdated] = useState('');
-  
-
-
+  const [errorMessage, setErrorMessage] = useState('');
 
   const initialRecipe = {
-    title: '',
+    name: '',
     category: '',
     ingredients: '',
     instructions: '',
@@ -32,20 +31,50 @@ const AddRecipe = () => {
     setFile(file);
     setImageURL(URL.createObjectURL(file));
     setFileLabel(file ? file.name : 'No file chosen');
+  
+    // Get the file name
+    const fileName = file.name;
+    recipe.fileName = fileName; // Store the file name in the recipe object
+    console.log('File name:', fileName);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const email = localStorage.getItem('username');
+    if (!recipe.category) {
+      setErrorMessage('Please select a category');
+      return;
+    }
+
+try {
+  const email = localStorage.getItem('username');
+  const token = localStorage.getItem('token'); // get the token from local storage
+
+  // Upload the file
+  const formData = new FormData();
+  formData.append('image', file, file.name); // changed 'myFile' to 'image'
+  const uploadResponse = await axios.post('http://localhost:7000/api/recipe/upload', formData, {
+    headers: {
+      'Authorization': `Bearer ${token}` // include the token in the Authorization header
+    },
+    onUploadProgress: progressEvent => {
+      console.log(progressEvent.loaded / progressEvent.total);
+    }
+  });
+
+  // If the file is uploaded successfully, the server should return the URL of the uploaded file
+  if (uploadResponse.status === 200) {
+    const generatedFileName = uploadResponse.data.fileName; // Get the generated file name from the response
+    recipe.imageUrl = generatedFileName; // Store the generated file name as imageUrl
+  }
+
 
       const data = await addRecipe(
         recipe.name,
         recipe.category,
         recipe.ingredients,
         recipe.instructions,
-        imageUrl,
+        recipe.imageUrl,
         email 
       );
       console.log('Recipe added successfully:', data);
@@ -58,10 +87,16 @@ const AddRecipe = () => {
     }
   };
 
+  const handleCategoryChange = (category) => {
+    setRecipe({ ...recipe, category });
+    setErrorMessage('');
+  };
+
   return (
     <div className="container-add-recipe">
       <form onSubmit={handleSubmit}>
         <h2>Recipe Add</h2>
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         <div className="form-group">
           <label>Recipe Title:</label>
           <input
@@ -74,9 +109,8 @@ const AddRecipe = () => {
           />
         </div>
         <div className="form-group">
-        <label>Recipe category:</label>
-        <Category/>
-       
+          <label>Recipe category:</label>
+          <Category onSubmitCategory={handleCategoryChange} />
         </div>
         <div className="form-group">
           <label>Recipe Ingredients:</label>
@@ -108,7 +142,7 @@ const AddRecipe = () => {
                 alt="Selected"
                 style={{ maxWidth: '200px', marginTop: '10px' }}
               />
-              <p>Image URL: {fileLabel}</p> {/* Display filename instead of full URL */}
+              <p>Image URL: {fileLabel}</p>
             </div>
           )}
         </div>

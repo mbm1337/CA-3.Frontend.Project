@@ -146,11 +146,13 @@ export async function deleteComment(commentId) {
 }
 export async function deleteRecipe(recipeId) {
   const token = localStorage.getItem('token');
-  const response = await fetch(`${BASE_URL_DEV}/recipe/jens/${recipeId}`, {
+  const response = await fetch(`${BASE_URL_DEV}/recipe/${localStorage.getItem('username')}`, {
     method: 'DELETE',
     headers: {
       'Authorization': `Bearer ${token}`,
-    }
+      'Content-Type': 'application/json' 
+    },
+    body: JSON.stringify(recipeId) 
   });
   return response.json();
 }
