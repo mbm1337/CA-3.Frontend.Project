@@ -11,7 +11,7 @@ import EditRecipe from './Pages/EditRecipe';
 import UserRecipes from './Pages/UserRecipes';
 import AdminPanel from './Pages/AdminPanel';
 import Logout from './auth/Logout';
-import ProtectedRoute from './auth/ProtectedRoutes';
+import ProtectedRoute from './auth/protectedRoutes';
 import "./App.css";
 import PublicRoutes from './Pages/PublicRoutes';
 
