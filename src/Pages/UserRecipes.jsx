@@ -58,7 +58,7 @@ const UserRecipes = () => {
                 {recipes.map((recipe) => (
                     <li key={recipe.id}>
                         <h3>{recipe.name}</h3>
-                        <img src={`${BASE_URL_DEV}/images/${recipe.imageUrl}`} alt={recipe.name} style={{ maxWidth: '200px' }} />
+                        <img src={`${BASE_URL_DEV}/recipe/images/${recipe.imageUrl}`} alt={recipe.name} style={{ maxWidth: '200px' }} />
                         <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
                         <p><strong>Instructions:</strong> {recipe.instructions}</p>
                         <p><strong>Category:</strong> {recipe.category}</p>
