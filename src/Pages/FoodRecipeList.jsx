@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import Category from './Category';
 import { fetchRecipes } from '../service/ApiRecipes';
+import { BASE_URL_DEV } from "../Utils/globalvariables";
 const FoodRecipeList = () => {
   const [recipes, setRecipes] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -63,7 +64,7 @@ const FoodRecipeList = () => {
           <div className='recipes-list'>
               {filteredRecipes.map((recipe) => (
                   <div key={recipe.id} className='recipe-item'>
-                      <img src={`http://localhost:7000/api/images/${recipe.imageUrl}`} alt={recipe.name} style={{ maxWidth: '200px' }} />
+                      <img src={`${BASE_URL_DEV}/images/${recipe.imageUrl}`} alt={recipe.name} style={{ maxWidth: '200px' }} />
                       <div className='recipe-details'>
                           <h3>{recipe.name}</h3>
                           <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
