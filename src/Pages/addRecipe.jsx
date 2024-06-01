@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { addRecipe } from '../service/ApiRecipes';
 import Category from './Category';
 import axios from 'axios'; // Make sure to install axios
+import { BASE_URL_DEV } from "../Utils/globalvariables";
 
 const AddRecipe = () => {
   const [updated, setUpdated] = useState('');
@@ -53,7 +54,8 @@ try {
   // Upload the file
   const formData = new FormData();
   formData.append('image', file, file.name); // changed 'myFile' to 'image'
-  const uploadResponse = await axios.post('http://localhost:7000/api/recipe/upload', formData, {
+
+  const uploadResponse = await axios.post(`${BASE_URL_DEV}/recipe/upload`, formData, {
     headers: {
       'Authorization': `Bearer ${token}` // include the token in the Authorization header
     },
