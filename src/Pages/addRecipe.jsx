@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addRecipe } from '../service/ApiRecipes';
+import { addRecipe,uploadFile } from '../service/ApiRecipes';
 import Category from './Category';
-import axios from 'axios'; // Make sure to install axios
-import { BASE_URL_DEV } from "../Utils/globalvariables";
 
 const AddRecipe = () => {
   const [updated, setUpdated] = useState('');
@@ -33,9 +31,8 @@ const AddRecipe = () => {
     setImageURL(URL.createObjectURL(file));
     setFileLabel(file ? file.name : 'No file chosen');
   
-    // Get the file name
     const fileName = file.name;
-    recipe.fileName = fileName; // Store the file name in the recipe object
+    recipe.fileName = fileName;
     console.log('File name:', fileName);
   };
 
@@ -43,51 +40,34 @@ const AddRecipe = () => {
     e.preventDefault();
 
     if (!recipe.category) {
-      setErrorMessage('Please select a category');
-      return;
+        setErrorMessage('Please select a category');
+        return;
     }
 
-try {
-  const email = localStorage.getItem('username');
-  const token = localStorage.getItem('token'); // get the token from local storage
+    try {
+        const email = localStorage.getItem('username');
 
-  // Upload the file
-  const formData = new FormData();
-  formData.append('image', file, file.name); // changed 'myFile' to 'image'
+       
+        const generatedFileName = await uploadFile(file);
+        recipe.imageUrl = generatedFileName;
 
-  const uploadResponse = await axios.post(`${BASE_URL_DEV}/recipe/upload`, formData, {
-    headers: {
-      'Authorization': `Bearer ${token}` // include the token in the Authorization header
-    },
-    onUploadProgress: progressEvent => {
-      console.log(progressEvent.loaded / progressEvent.total);
-    }
-  });
-
-  // If the file is uploaded successfully, the server should return the URL of the uploaded file
-  if (uploadResponse.status === 200) {
-    const generatedFileName = uploadResponse.data.fileName; // Get the generated file name from the response
-    recipe.imageUrl = generatedFileName; // Store the generated file name as imageUrl
-  }
-
-
-      const data = await addRecipe(
-        recipe.name,
-        recipe.category,
-        recipe.ingredients,
-        recipe.instructions,
-        recipe.imageUrl,
-        email 
-      );
-      console.log('Recipe added successfully:', data);
-      
-      setUpdated(!updated);
-      setRecipe(initialRecipe);
-      navigate('/food-recipe');
+        const data = await addRecipe(
+            recipe.name,
+            recipe.category,
+            recipe.ingredients,
+            recipe.instructions,
+            recipe.imageUrl,
+            email 
+        );
+        console.log('Recipe added successfully:', data);
+        
+        setUpdated(!updated);
+        setRecipe(initialRecipe);
+        navigate('/food-recipe');
     } catch (error) {
-      console.error('Error adding recipe:', error);
+        console.error('Error adding recipe:', error);
     }
-  };
+};
 
   const handleCategoryChange = (category) => {
     setRecipe({ ...recipe, category });

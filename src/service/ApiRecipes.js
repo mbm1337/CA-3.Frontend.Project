@@ -1,4 +1,5 @@
 import { BASE_URL_DEV } from "../Utils/globalvariables";
+import axios from 'axios';
 
 
 
@@ -48,5 +49,71 @@ export const fetchRecipes = async () => {
     } catch (e) {
         console.log(e);
         throw e; 
+    }
+}
+export const uploadFile = async (file) => {
+    const email = localStorage.getItem('username');
+    const token = localStorage.getItem('token');
+
+    // Upload the file
+    const formData = new FormData();
+    formData.append('image', file, file.name);
+
+    const response = await axios.post(`${BASE_URL_DEV}/recipe/upload`, formData, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        onUploadProgress: progressEvent => {
+            console.log(progressEvent.loaded / progressEvent.total);
+        }
+    });
+
+    if (response.status === 200) {
+        const generatedFileName = response.data.fileName; 
+        return generatedFileName;
+    } else {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+}
+
+
+export const editRecipe = async (id, recipeData) => {
+    try {
+        const response = await fetch(`${BASE_URL_DEV}/recipe/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(recipeData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error updating recipe:', error);
+    }
+}
+export const fetchRecipeById = async (id) => {
+    try {
+        const response = await fetch(`${BASE_URL_DEV}/recipe/${id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching recipe:', error);
     }
 }
