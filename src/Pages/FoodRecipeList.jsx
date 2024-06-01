@@ -64,7 +64,7 @@ const FoodRecipeList = () => {
           <div className='recipes-list'>
               {filteredRecipes.map((recipe) => (
                   <div key={recipe.id} className='recipe-item'>
-                      <img src={`${BASE_URL_DEV}/images/${recipe.imageUrl}`} alt={recipe.name} style={{ maxWidth: '200px' }} />
+                      <img src={`${BASE_URL_DEV}/recipe/images/${recipe.imageUrl}`} alt={recipe.name} style={{ maxWidth: '200px' }} />
                       <div className='recipe-details'>
                           <h3>{recipe.name}</h3>
                           <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
