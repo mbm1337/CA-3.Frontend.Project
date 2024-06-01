@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { BASE_URL_DEV } from "../Utils/globalvariables";
+import { editRecipe, uploadFile, fetchRecipeById } from '../service/ApiRecipes';
 
 const Container = styled.div`
     display: flex;
@@ -55,80 +55,75 @@ const SubmitButton = styled.button`
     }
 `;
 
-const EditRecipe = ({ setUpdated, updated }) => {
-    const { id } = useParams();//
+const EditRecipe = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const email = localStorage.getItem('username');
+    const [file, setFile] = useState(null);
+    const [fileLabel, setFileLabel] = useState('No file chosen');
+    const [imageURL, setImageURL] = useState('');
     const [recipe, setRecipe] = useState({
         name: '',
         ingredients: '',
         instructions: '',
         category: '',
         imageUrl: '',
+        user: {
+            "email": email
+         }
     });
-    const [file, setFile] = useState(null);
-    const [imageURL, setImageURL] = useState('');
-    const [fileLabel, setFileLabel] = useState('Der er ikke valgt noget billede');
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchRecipe = async () => {
-            try {
-                const response = await fetch(`${BASE_URL_DEV}/recipe/${id}`, {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    }
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch recipe');
-                }
-                const data = await response.json();
-                setRecipe(data);
-                setImageURL(data.imageUrl);
-            } catch (error) {
-                console.error('Error fetching recipe:', error);
-            }
+            const fetchedRecipe = await fetchRecipeById(id);
+            setRecipe(fetchedRecipe);
+            setImageURL(fetchedRecipe.imageUrl);
         };
 
         fetchRecipe();
     }, [id]);
-
-    const handleChange = (e) => {
-        setRecipe({ ...recipe, [e.target.id]: e.target.value });
-    };
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setFile(file);
-        setImageURL(URL.createObjectURL(file));
-        setFileLabel(file ? file.name : 'Der er ikke valgt noget billede');
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        let finalFileName = recipe.imageUrl; 
+        if (file) {
+            // Upload the file and get the generated file name
+            finalFileName = await uploadFile(file);
+    
+        }
+    
         const recipeData = {
             name: recipe.name,
             ingredients: recipe.ingredients,
             instructions: recipe.instructions,
             category: recipe.category,
+            imageUrl: finalFileName,
+            user: {
+                "email": email
+             }
         };
 
-        try {
-            await fetch(`${BASE_URL_DEV}/recipe/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify(recipeData),
-            });
+        await editRecipe(recipe.id, recipeData);
 
-            setUpdated(!updated);
+        try {
+            await editRecipe(id, recipeData);
             navigate('/my-recipes');
         } catch (error) {
             console.error('Error updating recipe:', error);
         }
     };
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setRecipe(prevRecipe => ({
+            ...prevRecipe,
+            [name]: value
+        }));
+    };
+
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+    };
+    
     return (
         <Container>
             <FormBox>
@@ -137,7 +132,7 @@ const EditRecipe = ({ setUpdated, updated }) => {
                     <input
                         type="text"
                         value={recipe.name}
-                        id="name"
+                        name="name"
                         placeholder="Enter recipe title"
                         onChange={handleChange}
                         required
@@ -145,34 +140,27 @@ const EditRecipe = ({ setUpdated, updated }) => {
                     <input
                         type="text"
                         value={recipe.category}
-                        id="category"
+                        name="category"
                         placeholder="Enter category"
                         onChange={handleChange}
                         required
                     />
                     <textarea
                         value={recipe.ingredients}
-                        id="ingredients"
+                        name="ingredients"
                         placeholder="Enter ingredients"
                         onChange={handleChange}
                         required
                     />
                     <textarea
                         value={recipe.instructions}
-                        id="instructions"
+                        name="instructions"
                         placeholder="Enter instructions"
                         onChange={handleChange}
                         required
                     />
-                    <FileInputLabel htmlFor="file">
-                        Vælg billede
-                    </FileInputLabel>
-                    <HiddenFileInput
-                        type="file"
-                        id="file"
-                        onChange={handleFileChange}
-                    />
-                    <p>{fileLabel}</p>
+                    <input type="file" onChange={handleFileChange} />
+         
                     {imageURL && <img src={imageURL} alt="Selected" style={{ maxWidth: '200px', marginTop: '10px' }} />}
                     <SubmitButton type="submit">Update Recipe</SubmitButton>
                 </FormContainer>
