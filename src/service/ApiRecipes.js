@@ -102,9 +102,6 @@ export const fetchRecipeById = async (id) => {
     try {
         const response = await fetch(`${BASE_URL_DEV}/recipe/${id}`, {
             method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
         });
 
         if (!response.ok) {
@@ -117,3 +114,79 @@ export const fetchRecipeById = async (id) => {
         console.error('Error fetching recipe:', error);
     }
 }
+
+export const fetchRecipeByEmail = async (email) => {
+    try {
+        const response = await fetch(`${BASE_URL_DEV}/recipe/personal/${email}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching recipes:', error);
+        return [];
+    }
+};
+
+export const fetchCommentsByRecipeId = async (id) => {
+    const response = await fetch(`${BASE_URL_DEV}/comment/${id}`);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const comments = await response.json();
+    return comments;
+};
+
+export async function deleteRecipe(recipeId) {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${BASE_URL_DEV}/recipe/${localStorage.getItem('username')}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json' 
+      },
+      body: JSON.stringify(recipeId) 
+    });
+    return response.json();
+  }
+
+
+export const postComment = async (id, text) => {
+    const response = await fetch(`${BASE_URL_DEV}/comment/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+
+            email: localStorage.getItem('username'),
+        },
+        body: JSON.stringify({
+            text: text,
+        }),
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+};
+
+export const deleteComment = async (commentId) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${BASE_URL_DEV}/comment/${localStorage.getItem('username')}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(commentId) 
+      });
+      return response.json();
+    };

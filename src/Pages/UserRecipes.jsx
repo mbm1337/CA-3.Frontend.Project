@@ -1,49 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL_DEV } from "../Utils/globalvariables";
+import { fetchRecipeByEmail,deleteRecipe } from '../service/ApiRecipes';
+
 
 const UserRecipes = () => {
     const [recipes, setRecipes] = useState([]);
     const navigate = useNavigate();
-    const email = localStorage.getItem('username');
+
     useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                const response = await fetch(`${BASE_URL_DEV}/recipe/personal/${email}`, {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    }
-                });
-                const data = await response.json();
+        const getRecipes = async () => {
+            const email = localStorage.getItem('username');
+            if (email) {
+                const data = await fetchRecipeByEmail(email);
                 setRecipes(data);
-            } catch (error) {
-                console.error('Error fetching recipes:', error);
             }
         };
 
-        fetchRecipes();
+        getRecipes();
     }, []);
 
     const handleDelete = async (id) => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`${BASE_URL_DEV}/recipe/${localStorage.getItem('username')}`, {
-                method: 'DELETE',
-                headers: {
-                  'Authorization': `Bearer ${token}`,
-                  'Content-Type': 'application/json' 
-                },
-                body: JSON.stringify(id) 
-            });
-    
-            if (response.ok) {
-                
-                setRecipes(recipes.filter(recipe => recipe.id !== id));
-            } else {
-                console.error('Error deleting recipe:', await response.text());
-            }
-        } catch (error) {
-            console.error('Error deleting recipe:', error);
+        const isSuccess = await deleteRecipe(id);
+        if (isSuccess) {
+            setRecipes(recipes.filter(recipe => recipe.id !== id));
         }
     };
 
@@ -55,21 +35,21 @@ const UserRecipes = () => {
         <div>
             <h2>My Recipes</h2>
             <ul>
-            {Array.isArray(recipes) && recipes.length > 0 ? (
-    recipes.map((recipe) => (
-        <li key={recipe.id}>
-            <h3>{recipe.name}</h3>
-            <img src={`${BASE_URL_DEV}/recipe/images/${recipe.imageUrl}`} alt={recipe.name} style={{ maxWidth: '200px' }} />
-            <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
-            <p><strong>Instructions:</strong> {recipe.instructions}</p>
-            <p><strong>Category:</strong> {recipe.category}</p>
-            <button onClick={() => handleEdit(recipe.id)}>Edit</button>
-            <button onClick={() => handleDelete(recipe.id)}>Delete</button>
-        </li>
-    ))
-) : (
-    <p>Du har endu ikke oprettet nogen opskrifter </p>
-)}
+                {Array.isArray(recipes) && recipes.length > 0 ? (
+                    recipes.map((recipe) => (
+                        <li key={recipe.id}>
+                            <h3>{recipe.name}</h3>
+                            <img src={`${BASE_URL_DEV}/recipe/images/${recipe.imageUrl}`} alt={recipe.name} style={{ maxWidth: '200px' }} />
+                            <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
+                            <p><strong>Instructions:</strong> {recipe.instructions}</p>
+                            <p><strong>Category:</strong> {recipe.category}</p>
+                            <button onClick={() => handleEdit(recipe.id)}>Edit</button>
+                            <button onClick={() => handleDelete(recipe.id)}>Delete</button>
+                        </li>
+                    ))
+                ) : (
+                    <p>You have not created any recipes yet.</p>
+                )}
             </ul>
         </div>
     );

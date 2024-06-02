@@ -86,7 +86,6 @@ const EditRecipe = () => {
         e.preventDefault();
         let finalFileName = recipe.imageUrl; 
         if (file) {
-            // Upload the file and get the generated file name
             finalFileName = await uploadFile(file);
     
         }
