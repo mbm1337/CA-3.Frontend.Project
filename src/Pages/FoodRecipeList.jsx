@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet,useNavigate} from 'react-router-dom';
 import Category from './Category';
 import { fetchRecipes } from '../service/ApiRecipes';
 import { BASE_URL_DEV } from "../Utils/globalvariables";
@@ -44,6 +44,12 @@ const FoodRecipeList = () => {
       filteredRecipes.sort((a, b) => b.review - a.review);
   }
 
+  const navigate = useNavigate();
+
+  const handleById = (id) => {
+    navigate(`/recipes/${id}`);
+};
+
   return (
       <div className='container-recipes'>
           <div className='recipes-header'>
@@ -63,15 +69,15 @@ const FoodRecipeList = () => {
           </div>
           <div className='recipes-list'>
               {filteredRecipes.map((recipe) => (
-                  <div key={recipe.id} className='recipe-item'>
-                      <img src={`${BASE_URL_DEV}/recipe/images/${recipe.imageUrl}`} alt={recipe.name} style={{ maxWidth: '200px' }} />
-                      <div className='recipe-details'>
-                          <h3>{recipe.name}</h3>
-                          <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
-                          <p><strong>Instructions:</strong> {recipe.instructions}</p>
-                          <p><strong>Category:</strong> {recipe.category}</p>
-                      </div>
-                  </div>
+             <div key={recipe.id} className='recipe-item' onClick={() => handleById(recipe.id)}>
+             <img src={`${BASE_URL_DEV}/recipe/images/${recipe.imageUrl}`} alt={recipe.name} style={{ maxWidth: '200px' }} />
+             <div className='recipe-details'>
+                 <h3>{recipe.name}</h3>
+                 <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
+                 <p><strong>Instructions:</strong> {recipe.instructions}</p>
+                 <p><strong>Category:</strong> {recipe.category}</p>
+             </div>
+         </div>
               ))}
           </div>
           <Outlet />

@@ -14,6 +14,7 @@ import Logout from './auth/Logout';
 import ProtectedRoute from './auth/protectedRoutes';
 import "./App.css";
 import PublicRoutes from './Pages/PublicRoutes';
+import RecipeDetail from './Pages/RecipeDetail';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -39,6 +40,7 @@ function App() {
           <Route path="/food-recipe" element={<FoodRecipeList />} />
           <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
           <Route path="/admin" element={<ProtectedRoute isAuthenticated={isAuthenticated} component={<AdminPanel />} />} />
+          <Route path="/recipes/:id" element={<RecipeDetail/>}/>
         </Routes>
       </div>
     </Router>

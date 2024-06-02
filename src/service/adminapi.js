@@ -135,7 +135,7 @@ export async function getAllRecipes() {
 
 export async function deleteComment(commentId) {
   const token = localStorage.getItem('token');
-  const response = await fetch(`${BASE_URL_DEV}/comment/`, {
+  const response = await fetch(`${BASE_URL_DEV}/comment/${localStorage.getItem('username')}`, {
     method: 'DELETE',
     headers: {
       'Authorization': `Bearer ${token}`,
